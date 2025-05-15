@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Trace - From Farm to Fork</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blur-intensity: 12px;
+            --primary-color: #4CAF50;
+            --primary-light: #7BC67E;
+            --primary-dark: #3B8C3E;
+            --accent-color: #FF9800;
+            --text-light: #FFFFFF;
+            --text-dark: #212121;
+            --overlay-color: rgba(0,0,0,0.5);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 5rem;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --transition-speed: 0.3s;
+        }
+
+
+
+        body {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-light);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  padding-top: 76px;
+}
+
+        .frosted-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(var(--blur-intensity));
+            -webkit-backdrop-filter: blur(var(--blur-intensity));
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.2) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            color: var(--primary-color);
+            margin-right: var(--spacing-xs);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: var(--spacing-xs) var(--spacing-sm) !important;
+            margin: 0 var(--spacing-xs);
+            border-radius: var(--border-radius-sm);
+            transition: all var(--transition-speed);
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: var(--spacing-xs);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: var(--spacing-xl) 0;
+            min-height: 85vh;
+        }
+
+        .hero-content {
+            padding: var(--spacing-lg);
+        }
+
+        .hero-title {
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-subtitle {
+            margin-bottom: var(--spacing-lg);
+            font-weight: 300;
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-outline-light {
+            border-width: 2px;
+            font-weight: 500;
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 50px;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--text-light);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+        }
+
+        .btn-accent:hover {
+            background-color: #E08600;
+            border-color: #E08600;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        /* Features Section */
+        .section-title {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+            font-weight: 600;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .feature-card {
+            padding: var(--spacing-md);
+            height: 100%;
+            transition: all var(--transition-speed);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            background: rgba(76, 175, 80, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-title {
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .feature-text {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .timeline {
+            position: relative;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-color);
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+        }
+
+        .timeline-item {
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: var(--spacing-md);
+            position: relative;
+        }
+
+        .timeline-content:after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-left {
+            margin-right: auto;
+        }
+
+        .timeline-right {
+            margin-left: auto;
+        }
+
+        .timeline-left:after {
+            right: -12px;
+        }
+
+        .timeline-right:after {
+            left: -12px;
+        }
+
+        /* Demo Section */
+        .scan-demo {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .scan-demo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 48%, 
+                rgba(255,255,255,0.1) 50%, 
+                transparent 52%);
+            animation: scan 4s infinite linear;
+        }
+
+        @keyframes scan {
+            0% { transform: rotate(45deg) translateY(-50%); }
+            100% { transform: rotate(45deg) translateY(150%); }
+        }
+
+        .qr-code {
+            position: relative;
+            z-index: 1;
+            background: white;
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            display: inline-block;
+        }
+
+        .qr-demo-info {
+            margin-top: var(--spacing-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .contact-form {
+            padding: var(--spacing-md);
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-color);
+            color: var(--text-light);
+            box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(var(--blur-intensity));
+            padding: var(--spacing-lg) 0;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-brand i {
+            color: var(--primary-color);
+            margin-right: var(--spacing-xs);
+            font-size: 1.5rem;
+        }
+
+        .footer-brand h4 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-nav li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all var(--transition-speed);
+        }
+
+        .footer-nav a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            transition: all var(--transition-speed);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991.98px) {
+            .hero-section {
+                padding: var(--spacing-lg) 0;
+            }
+
+            .system-description {
+                margin-top: var(--spacing-md);
+            }
+
+            .timeline:before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 40px);
+                margin-left: 40px;
+            }
+
+            .timeline-content:after {
+                left: -32px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .feature-card {
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .hero-content {
+                padding: var(--spacing-md);
+            }
+        }
+
+        /* Animation Effects */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Utility Classes */
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-accent {
+            color: var(--accent-color) !important;
+        }
+        
+        .bg-primary-light {
+            background-color: rgba(76, 175, 80, 0.1) !important;
+        }
+        
+        .rounded-lg {
+            border-radius: var(--border-radius-lg) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top nav-blur py-2">
+        <div class="container">
+            <a class="navbar-brand text-white" href="#">
+                <i class="material-icons">grass</i>
+                Food Trace
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="material-icons text-white">menu</i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link text-white" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#demo">Demo</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-2"><a class="btn btn-sm btn-primary" href="login.php"><i class="material-icons me-1" style="font-size: 1rem; vertical-align: middle;">login</i> Sign In</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <!-- Main Hero Content -->
+                <div class="col-lg-6 col-md-12 fade-in">
+                    <div class="frosted-glass hero-content">
+                        <h1 class="hero-title display-4">Know Your Food's Journey</h1>
+                        <p class="hero-subtitle">From farm to fork, track every step with blockchain-powered transparency</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <button class="btn btn-primary">
+                                <i class="material-icons align-middle me-2">qr_code_scanner</i>
+                                Try Demo Scan
+                            </button>
+                            <button class="btn btn-outline-light">
+                                <i class="material-icons align-middle me-2">play_circle</i>
+                                Watch Video
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Description -->
+                <div class="col-lg-5 col-md-12 mt-lg-0 mt-4 system-description fade-in">
+                    <div class="frosted-glass p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary-light rounded-circle p-2 me-3">
+                                <i class="material-icons text-primary">verified</i>
+                            </div>
+                            <h3 class="mb-0">Transparency You Can Taste</h3>
+                        </div>
+                        <p class="mb-3">
+                            Food Trace revolutionizes food safety by creating an immutable digital ledger of your food's journey. 
+                            Using blockchain technology and IoT sensors, we track every critical point from seed to shelf.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="material-icons text-primary me-2" style="font-size: 1rem; vertical-align: middle;">check_circle</i> Farm-to-table transparency</li>
+                            <li class="mb-2"><i class="material-icons text-primary me-2" style="font-size: 1rem; vertical-align: middle;">check_circle</i> Blockchain-verified data</li>
+                            <li><i class="material-icons text-primary me-2" style="font-size: 1rem; vertical-align: middle;">check_circle</i> Real-time tracking &amp; monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row frosted-glass py-4 px-2 text-center">
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <h3 class="text-primary mb-0">200+</h3>
+                    <p class="mb-0">Farms Connected</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <h3 class="text-primary mb-0">200+</h3>
+                    <p class="mb-0">Products Tracked</p>
+                </div>
+                <div class="col-md-3 col-6">
+                    <h3 class="text-primary mb-0">6</h3>
+                    <p class="mb-0">States</p>
+                </div>
+                <div class="col-md-3 col-6">
+                    <h3 class="text-primary mb-0">95%</h3>
+                    <p class="mb-0">Data Accuracy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Follow Your Food's Journey</h2>
+            <div class="row g-4">
+                <!-- Farm Origins -->
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="frosted-glass feature-card">
+                        <div class="feature-icon">
+                            <i class="material-icons">agriculture</i>
+                        </div>
+                        <h3 class="feature-title">Farm Origins</h3>
+                        <p class="feature-text">Trace crops back to their source - view farm location, harvest dates, soil health data, and sustainable practices used.</p>
+                        <a href="#" class="btn btn-sm btn-outline-light mt-auto">Learn More</a>
+                    </div>
+                </div>
+
+                <!-- Processing Journey -->
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="frosted-glass feature-card">
+                        <div class="feature-icon">
+                            <i class="material-icons">factory</i>
+                        </div>
+                        <h3 class="feature-title">Processing Journey</h3>
+                        <p class="feature-text">Track processing stages - see facilities, additives used, quality checks, and packaging details with timestamps.</p>
+                        <a href="#" class="btn btn-sm btn-outline-light mt-auto">Learn More</a>
+                    </div>
+                </div>
+
+                <!-- Smart Distribution -->
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="frosted-glass feature-card">
+                        <div class="feature-icon">
+                            <i class="material-icons">local_shipping</i>
+                        </div>
+                        <h3 class="feature-title">Smart Distribution</h3>
+                        <p class="feature-text">Monitor transportation in real-time - view routes, temperature logs, handling procedures, and customs documentation.</p>
+                        <a href="#" class="btn btn-sm btn-outline-light mt-auto">Learn More</a>
+                    </div>
+                </div>
+
+                <!-- Retail Transparency -->
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="frosted-glass feature-card">
+                        <div class="feature-icon">
+                            <i class="material-icons">storefront</i>
+                        </div>
+                        <h3 class="feature-title">Retail Transparency</h3>
+                        <p class="feature-text">Verify store handling - access shelf life data, storage conditions, and expiration alerts at point of sale.</p>
+                        <a href="#" class="btn btn-sm btn-outline-light mt-auto">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="text-center section-title">How It Works</h2>
+            <div class="timeline">
+                <!-- Step 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-content timeline-left frosted-glass fade-in">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary-light rounded-circle p-2 me-3">
+                                <span class="text-primary fw-bold">1</span>
+                            </div>
+                            <h3 class="mb-0">Data Collection</h3>
+                        </div>
+                        <p>IoT sensors collect critical data points throughout the food production chain, from soil conditions to temperature during transport.</p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-content timeline-right frosted-glass fade-in">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary-light rounded-circle p-2 me-3">
+                                <span class="text-primary fw-bold">2</span>
+                            </div>
+                            <h3 class="mb-0">Blockchain Verification</h3>
+                        </div>
+                        <p>Each data point is verified and stored on our secure blockchain ledger, creating an immutable record that cannot be altered.</p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-content timeline-left frosted-glass fade-in">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary-light rounded-circle p-2 me-3">
+                                <span class="text-primary fw-bold">3</span>
+                            </div>
+                            <h3 class="mb-0">Smart QR Generation</h3>
+                        </div>
+                        <p>A unique QR code is generated for each product batch, linking to its complete history and journey information.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-content timeline-right frosted-glass fade-in">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary-light rounded-circle p-2 me-3">
+                                <span class="text-primary fw-bold">4</span>
+                            </div>
+                            <h3 class="mb-0">Consumer Access</h3>
+                        </div>
+                        <p>Consumers scan the QR code at point of purchase to access the complete journey of their food in an intuitive visual timeline.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-5">
+        <div class="container">
+            <div class="scan-demo frosted-glass">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <h2 class="mb-4">Scan to Reveal the Story</h2>
+                        <p class="mb-4">Experience how Food Trace works by scanning this sample QR code. See the complete journey of a packaged Casava flakes (Garri) from Okpokwu LGA, Benue State, Nigeria.</p>
+                        <button class="btn btn-accent d-none">
+                            <i class="material-icons align-middle me-2">phone_android</i>
+                            Download App
+                        </button>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div class="qr-code mb-3">
+                            <img src="/assets/images/qrcode.png" alt="Demo QR" class="img-fluid">
+                        </div>
+                        <div class="qr-demo-info">
+                            <p class="mb-1">Try it with your phone camera!</p>
+                            <small class="text-light">No app download required for demo</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="text-center section-title">Get In Touch</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="frosted-glass contact-form">
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Your name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Your email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Your message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="frosted-glass h-100 p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary-light rounded-circle p-2 me-3">
+                                <i class="material-icons text-primary">contact_support</i>
+                            </div>
+                            <h3 class="mb-0">Contact Information</h3>
+                        </div>
+                        <div class="mb-4">
+                            <h5>Address</h5>
+                            <p class="mb-0">Gboko Road, Walmayo, Makurdi 970101</p>
+                            <p>Benue, Nigeria</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5>Email</h5>
+                            <p class="mb-0">info@foodtrace.com</p>
+                            <p>support@foodtrace.com</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5>Phone</h5>
+                            <p class="mb-0">+234812345678</p>
+                            <p>Mon-Fri, 9:00 AM - 5:00 PM</p>
+                        </div>
+                        <div class="social-links mt-4">
+                            <a href="https://www.facebook.com" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.twitter.com" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+       <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Logo & Description -->
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-brand">
+                        <i class="material-icons">grass</i>
+                        <h4>Food Trace</h4>
+                    </div>
+                    <p>Revolutionizing food transparency with blockchain technology. Know where your food comes from and how it reached your plate.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="footer-nav">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Sign In</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Our Services</h5>
+                    <ul class="footer-nav">
+                        <li><a href="#">For Farmers</a></li>
+                        <li><a href="#">For Processors</a></li>
+                        <li><a href="#">For Distributors</a></li>
+                        <li><a href="#">For Retailers</a></li>
+                        <li><a href="#">For Consumers</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources -->
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-3">Resources</h5>
+                    <ul class="footer-nav">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="col-lg-2">
+                    <h5 class="mb-3">Newsletter</h5>
+                    <p class="small">Subscribe to our newsletter today to get updates on food traceability.</p>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your email" aria-label="Your email">
+                            <button class="btn btn-primary" type="button"><i class="material-icons">send</i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="copyright">
+                <p>&copy; 2025 Food Trace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade in animation
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
